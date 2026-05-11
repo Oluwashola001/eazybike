@@ -265,7 +265,7 @@ export default function ProductGrid() {
               </div>
 
               {/* Details side */}
-              <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center overflow-y-auto">
+              <div className="w-full md:w-1/2 p-8 pt-32 md:pt-12 md:p-12 flex flex-col justify-center overflow-y-auto">
                 <div className="mb-8">
                   <p className="text-zinc-500 text-xs font-bold tracking-[0.2em] uppercase mb-3">
                     {selectedProduct.category}
