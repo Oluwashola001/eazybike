@@ -54,7 +54,7 @@ export default function Hero() {
       {/* Layer 1: Loop Video (Background Layer) */}
       <video
         ref={loopVideoRef}
-        src="https://hp2ls42lgzp8cbqy.public.blob.vercel-storage.com/hero.webm"
+        src="https://hp2ls42lgzp8cbqy.public.blob.vercel-storage.com/loop.webm"
         muted
         playsInline
         loop
