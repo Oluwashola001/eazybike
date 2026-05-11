@@ -2,6 +2,7 @@ import Hero from "@/components/Hero";
 import ProductGrid from "@/components/ProductGrid";
 import RentalSection from "@/components/RentalSection";
 import RepairSection from "@/components/RepairSection";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -16,6 +17,8 @@ export default function Home() {
       <RentalSection />
       {/* The Repair Section */}
       <RepairSection />
+      {/* The Footer */}
+      <Footer />
 
     </div>
   );

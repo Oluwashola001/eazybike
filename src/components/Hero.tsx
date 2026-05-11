@@ -11,6 +11,13 @@ export default function Hero() {
   const loopVideoRef = useRef<HTMLVideoElement>(null);
   const [introFinished, setIntroFinished] = useState(false);
 
+  // Speed up the intro video on page load
+  useEffect(() => {
+    if (introVideoRef.current) {
+      introVideoRef.current.playbackRate = 2.0;
+    }
+  }, []);
+
   // Triggered the exact frame the assembly video ends
   const handleIntroEnd = () => {
     setIntroFinished(true);
@@ -47,7 +54,7 @@ export default function Hero() {
       {/* Layer 1: Loop Video (Background Layer) */}
       <video
         ref={loopVideoRef}
-        src="/videos/loop.webm"
+        src="https://hp2ls42lgzp8cbqy.public.blob.vercel-storage.com/0507%282%29.mp4"
         muted
         playsInline
         loop
@@ -57,7 +64,7 @@ export default function Hero() {
       {/* Layer 2: Intro Video (Foreground Layer) */}
       <video
         ref={introVideoRef}
-        src="/videos/hero.webm"
+        src="https://hp2ls42lgzp8cbqy.public.blob.vercel-storage.com/0507.mp4"
         autoPlay
         muted
         playsInline
