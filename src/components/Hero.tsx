@@ -92,7 +92,7 @@ export default function Hero() {
               className="text-5xl md:text-6xl font-medium tracking-tight text-white mb-6 leading-[1.1]"
             >
               Welcome to<br />
-              <span className="text-zinc-500">Mr EAZYE</span>
+              <span className="text-zinc-500">Dr. EV</span>
             </motion.h1>
             
             <motion.p 
