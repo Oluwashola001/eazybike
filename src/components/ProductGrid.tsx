@@ -80,6 +80,9 @@ const Reveal = ({
 const ProductCard = ({ product, onClick }: { product: Product; onClick: () => void }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  // Mobile slider: 0 = imageA, 1 = imageB
+  const [slideIndex, setSlideIndex] = useState(0);
+
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -102,6 +105,9 @@ const ProductCard = ({ product, onClick }: { product: Product; onClick: () => vo
     y.set(0);
   };
 
+  const images = [product.imageA, product.imageB];
+  const activeImage = isHovered ? product.imageB : product.imageA;
+
   return (
     <motion.div
       ref={ref}
@@ -115,19 +121,83 @@ const ProductCard = ({ product, onClick }: { product: Product; onClick: () => vo
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-10 pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-zinc-500/10 rounded-full blur-3xl group-hover:bg-zinc-400/20 transition-all duration-500 z-0 pointer-events-none" />
 
+      {/* ── DESKTOP: hover swap (unchanged behaviour) ── */}
       <div
-        className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none"
+        className="hidden md:flex absolute inset-0 items-center justify-center z-20 pointer-events-none"
         style={{ transform: 'translateZ(50px)', willChange: 'transform' }}
       >
         <motion.img
           layoutId={`product-image-${product.id}`}
-          src={isHovered ? product.imageB : product.imageA}
+          src={activeImage}
           alt={product.name}
           loading="lazy"
           decoding="async"
           className="absolute w-full max-h-[75%] object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-105"
         />
         <img src={product.imageB} alt="preload" className="hidden" aria-hidden="true" />
+      </div>
+
+      {/* ── MOBILE: swipeable + arrow slider ── */}
+      <div
+        className="flex md:hidden absolute inset-0 items-center justify-center z-20"
+        onTouchStart={(e) => {
+          const touch = e.touches[0];
+          (e.currentTarget as HTMLDivElement).dataset.touchStartX = String(touch.clientX);
+        }}
+        onTouchEnd={(e) => {
+          const startX = Number((e.currentTarget as HTMLDivElement).dataset.touchStartX ?? 0);
+          const endX = e.changedTouches[0].clientX;
+          const diff = startX - endX;
+          if (Math.abs(diff) < 40) return;
+          if (diff > 0) {
+            setSlideIndex((i) => (i === images.length - 1 ? 0 : i + 1));
+          } else {
+            setSlideIndex((i) => (i === 0 ? images.length - 1 : i - 1));
+          }
+        }}
+      >
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={slideIndex}
+            src={images[slideIndex]}
+            alt={product.name}
+            loading="lazy"
+            decoding="async"
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -24 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            className="absolute w-full max-h-[75%] object-contain drop-shadow-2xl"
+          />
+        </AnimatePresence>
+
+        {/* Left arrow */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setSlideIndex((i) => (i === 0 ? images.length - 1 : i - 1));
+          }}
+          className="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-black/60 transition-all"
+          aria-label="Previous image"
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+
+        {/* Right arrow */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setSlideIndex((i) => (i === images.length - 1 ? 0 : i + 1));
+          }}
+          className="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-black/60 transition-all"
+          aria-label="Next image"
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M5 2L10 7L5 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
       </div>
 
       <div className="relative z-30 transform transition-transform duration-500" style={{ transform: 'translateZ(30px)' }}>
@@ -265,7 +335,7 @@ export default function ProductGrid() {
               </div>
 
               {/* Details side */}
-              <div className="w-full md:w-1/2 p-8 pt-32 md:pt-12 md:p-12 flex flex-col justify-center overflow-y-auto">
+              <div className="w-full md:w-1/2 p-8 pt-52 md:pt-12 md:p-12 flex flex-col justify-center overflow-y-auto">
                 <div className="mb-8">
                   <p className="text-zinc-500 text-xs font-bold tracking-[0.2em] uppercase mb-3">
                     {selectedProduct.category}
