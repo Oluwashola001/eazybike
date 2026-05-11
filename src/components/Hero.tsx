@@ -54,7 +54,7 @@ export default function Hero() {
       {/* Layer 1: Loop Video (Background Layer) */}
       <video
         ref={loopVideoRef}
-        src="https://hp2ls42lgzp8cbqy.public.blob.vercel-storage.com/0507%282%29.mp4"
+        src="https://hp2ls42lgzp8cbqy.public.blob.vercel-storage.com/hero.webm"
         muted
         playsInline
         loop
@@ -64,7 +64,7 @@ export default function Hero() {
       {/* Layer 2: Intro Video (Foreground Layer) */}
       <video
         ref={introVideoRef}
-        src="https://hp2ls42lgzp8cbqy.public.blob.vercel-storage.com/0507.mp4"
+        src="https://hp2ls42lgzp8cbqy.public.blob.vercel-storage.com/loop.webm"
         autoPlay
         muted
         playsInline
