@@ -171,7 +171,7 @@ export default function RepairSection() {
         {/* Sequence 1: Sticky base layer */}
         <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex items-center justify-center z-10">
           <video
-            src="https://hp2ls42lgzp8cbqy.public.blob.vercel-storage.com/0511.mp4"
+            src="https://hp2ls42lgzp8cbqy.public.blob.vercel-storage.com/break.webm"
             autoPlay
             muted
             loop
