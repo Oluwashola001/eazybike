@@ -64,7 +64,7 @@ export default function Hero() {
       {/* Layer 2: Intro Video (Foreground Layer) */}
       <video
         ref={introVideoRef}
-        src="https://hp2ls42lgzp8cbqy.public.blob.vercel-storage.com/loop.webm"
+        src="https://hp2ls42lgzp8cbqy.public.blob.vercel-storage.com/hero.webm"
         autoPlay
         muted
         playsInline
