@@ -194,7 +194,7 @@ export default function RepairSection() {
         {/* Sequence 2: Scrolls over with feathered top edge */}
         <div className="relative h-[100dvh] w-full overflow-hidden flex items-center justify-center z-20 [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_15%)] [mask-image:linear-gradient(to_bottom,transparent,black_15%)]">
           <video
-            src="https://hp2ls42lgzp8cbqy.public.blob.vercel-storage.com/fix.webm"
+            src="https://hp2ls42lgzp8cbqy.public.blob.vercel-storage.com/fix2.webm"
             autoPlay
             muted
             loop
